@@ -1,0 +1,39 @@
+// パラメータ定義
+properties([
+    parameters([
+        string(name: 'TARGET_BRANCH', defaultValue: 'main', description: 'Target branch'),
+        string(name: 'BUILD_TYPE', defaultValue: 'release', description: 'Build type'),
+        booleanParam(name: 'RUN_TESTS', defaultValue: true, description: 'Run tests')
+    ]),
+    // このブランチではコミットトリガーを無効化
+    pipelineTriggers([])
+])
+
+pipeline {
+    agent any
+    
+    // このパイプラインは手動実行またはAPI経由でのみ実行
+    when {
+        anyOf {
+            triggeredBy 'UserIdCause'
+            triggeredBy 'RemoteCause'
+            triggeredBy 'UpstreamCause'
+        }
+    }
+    
+    stages {
+        stage('Actual Processing') {
+            steps {
+                echo "Processing with parameters:"
+                echo "TARGET_BRANCH: ${params.TARGET_BRANCH}"
+                echo "BUILD_TYPE: ${params.BUILD_TYPE}"
+                echo "RUN_TESTS: ${params.RUN_TESTS}"
+                
+                // // 実際の処理をここに記述
+                // script {
+                //     // your actual build logic here
+                // }
+            }
+        }
+    }
+}

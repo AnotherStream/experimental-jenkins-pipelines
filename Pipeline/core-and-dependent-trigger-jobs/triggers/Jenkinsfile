@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    
+    // このブランチのみコミットでトリガーされる
+    triggers {
+        pollSCM('H/5 * * * *')  // 5分おきにポーリング
+    }
+    
+    stages {
+        stage('Trigger Core Pipeline') {
+            steps {
+                script {
+                    // デフォルトパラメータで実際の処理パイプラインを実行
+                    build job: '../core', 
+                          parameters: [
+                              string(name: 'TARGET_BRANCH', value: env.BRANCH_NAME),
+                              string(name: 'BUILD_TYPE', value: 'release'),
+                              booleanParam(name: 'RUN_TESTS', value: true)
+                          ],
+                          wait: true
+                }
+            }
+        }
+    }
+}
