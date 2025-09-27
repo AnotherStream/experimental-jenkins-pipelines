@@ -8,12 +8,16 @@ properties([
     // このブランチではコミットトリガーを無効化
     pipelineTriggers([]),
     // GitHub API制限を回避するためのオプション
-    disableConcurrentBuilds(),
-    skipDefaultCheckout()
+    disableConcurrentBuilds()
 ])
 
 pipeline {
     agent any
+
+    // GitHub API制限を回避するためのオプション
+    options {
+        skipDefaultCheckout()
+    }
 
     stages {
         stage('Actual Processing') {
