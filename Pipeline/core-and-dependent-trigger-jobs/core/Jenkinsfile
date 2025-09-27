@@ -11,18 +11,17 @@ properties([
 
 pipeline {
     agent any
-    
-    // このパイプラインは手動実行またはAPI経由でのみ実行
-    when {
-        anyOf {
-            triggeredBy 'UserIdCause'
-            triggeredBy 'RemoteCause'
-            triggeredBy 'UpstreamCause'
-        }
-    }
-    
+
     stages {
         stage('Actual Processing') {
+            // このパイプラインは手動実行またはAPI経由でのみ実行
+            when {
+                anyOf {
+                    triggeredBy 'UserIdCause'
+                    triggeredBy 'RemoteCause'
+                    triggeredBy 'UpstreamCause'
+                }
+            }
             steps {
                 echo "Processing with parameters:"
                 echo "TARGET_BRANCH: ${params.TARGET_BRANCH}"

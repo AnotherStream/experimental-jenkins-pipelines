@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
                     // デフォルトパラメータで実際の処理パイプラインを実行
-                    build job: '../core', 
+                    build job: "core-and-dependent-trigger-jobs/core/${env.BRANCH_NAME}",
                           parameters: [
                               string(name: 'TARGET_BRANCH', value: env.BRANCH_NAME),
                               string(name: 'BUILD_TYPE', value: 'release'),
