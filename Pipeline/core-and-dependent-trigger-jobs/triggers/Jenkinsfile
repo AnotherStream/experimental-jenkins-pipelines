@@ -3,7 +3,7 @@ pipeline {
     
     // このブランチのみコミットでトリガーされる
     triggers {
-        pollSCM('H/5 * * * *')  // 5分おきにポーリング
+        pollSCM('H/15 * * * *')  // 15分おきにポーリング
     }
     
     stages {
