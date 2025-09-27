@@ -6,7 +6,10 @@ properties([
         booleanParam(name: 'RUN_TESTS', defaultValue: true, description: 'Run tests')
     ]),
     // このブランチではコミットトリガーを無効化
-    pipelineTriggers([])
+    pipelineTriggers([]),
+    // GitHub API制限を回避するためのオプション
+    disableConcurrentBuilds(),
+    skipDefaultCheckout()
 ])
 
 pipeline {
